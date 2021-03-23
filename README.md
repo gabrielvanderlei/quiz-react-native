@@ -1,2 +1,2 @@
-# quiz-react-native
-Simple quiz project using react native.
+# React Native Quiz
+Simple quiz project using react native and Expo.
