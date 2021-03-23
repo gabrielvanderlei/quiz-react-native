@@ -13,7 +13,9 @@ export default function MenuScreen({
       <Text style={styles.title}>Menu</Text>
 
         {(questions.getAll()).map((questionInformation:any) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Question', questionInformation)} style={styles.link}>
+            <TouchableOpacity onPress={() => navigation.navigate('Question', {
+                id: questionInformation.id
+            })} style={styles.link}>
         <Text style={styles.linkText}>{questionInformation.title}</Text>
             </TouchableOpacity>
         ))}

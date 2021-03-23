@@ -2,7 +2,9 @@ export type RootStackParamList = {
   Root: undefined;
   Home: undefined;
   Menu: undefined;
-  Question: undefined;
+  Question: {
+      id:String
+  };
   NotFound: undefined;
 };
 
