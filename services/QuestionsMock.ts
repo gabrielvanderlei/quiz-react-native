@@ -20,6 +20,16 @@ export default [
             }
         ],
 
-        correctAnswer: "O3"
+        correctAnswer: "O3",
+        
+        correctAnswerInformation: {
+            title: "Correct answer to Q1",
+            description: "Good job."
+        },
+        
+        wrongAnswerInformation: {
+            title: "Wrong answer to Q1",
+            description: "The right answer was Q3."
+        }
     }
 ];

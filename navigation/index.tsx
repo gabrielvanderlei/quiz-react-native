@@ -7,6 +7,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MenuScreen from '../screens/MenuScreen';
 import QuestionScreen from '../screens/QuestionScreen';
+import AnswerScreen from '../screens/AnswerScreen';
 
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -33,6 +34,7 @@ function RootNavigator() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Menu" component={MenuScreen} />
       <Stack.Screen name="Question" component={QuestionScreen} />
+      <Stack.Screen name="Answer" component={AnswerScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );

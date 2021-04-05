@@ -6,10 +6,10 @@ export default {
     },
 
     getOne: function(id:any){
-        return questionsMock.filter(questionData => questionData.id === id );
+        return questionsMock.filter(questionData => questionData.id === id )[0];
     },
 
-    verifyAnswer: function(id, answer){
+    // verifyAnswer: function(id, answer){
 
-    }
+    // }
 }

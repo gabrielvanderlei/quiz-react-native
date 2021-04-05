@@ -5,6 +5,10 @@ export type RootStackParamList = {
   Question: {
       id:String
   };
+  Answer: {
+      id:String,
+      optionSelected: String
+  };
   NotFound: undefined;
 };
 

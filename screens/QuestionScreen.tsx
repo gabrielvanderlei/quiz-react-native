@@ -11,23 +11,14 @@ export default function QuestionScreen({
 }: StackScreenProps<RootStackParamList, 'Question'>) {
   const navigationParams:any = route.params;
   const params = questions.getOne(navigationParams.id);
-  return (
-      <View>
-          {JSON.stringify(params)}
-      </View>
-  )
-}
-  
-  function a(){
-  const [optionSelected, setSelectedOption] = React.useState(null);
+  const [optionSelected, setSelectedOption] = React.useState('');
   const correctAnswer = params.correctAnswer;
 
   let verifyQuestion = () => {
-      if(correctAnswer === optionSelected){
-          alert("Correct answer!");
-      } else {
-          alert("Incorrect answer.");
-      }
+    navigation.navigate('Answer', {
+        id: navigationParams.id,
+        optionSelected
+    })
   }
 
   return (
