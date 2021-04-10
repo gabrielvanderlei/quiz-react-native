@@ -14,6 +14,7 @@ export default function AnswerScreen({
   const correctAnswer = params.correctAnswer;
   const optionSelected = navigationParams.optionSelected;
   const isRightAnswer = (correctAnswer === optionSelected);
+  const isLastQuestion = questions.isLast(navigationParams.id);
 
   let getTitle = (isRightAnswer:any, rightAnswer:any) => {
     let returnMessage = '';
@@ -37,6 +38,10 @@ export default function AnswerScreen({
     return returnMessage;
   }
 
+  (async () => {
+    await questions.storeAnswer(navigationParams);
+  })();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Question</Text>
@@ -44,11 +49,17 @@ export default function AnswerScreen({
             <Text style={styles.linkText}>{getTitle(isRightAnswer, correctAnswer)}</Text>
             <Text style={styles.linkText}>{getDescription(isRightAnswer, correctAnswer)}</Text>
 
-            <TouchableOpacity onPress={() => navigation.replace('Question', {
-                id: String(Number(navigationParams.id) + 1)
-            })}>
-                <Text>Next question</Text>
-            </TouchableOpacity>
+            {!isLastQuestion ? (
+                <TouchableOpacity onPress={() => navigation.replace('Question', {
+                    id: String(params.nextQuestion)
+                })}>
+                    <Text>Next question</Text>
+                </TouchableOpacity>
+            ) : (
+                <TouchableOpacity onPress={() => navigation.replace('FinalResult')}>
+                    <Text>See results</Text>
+                </TouchableOpacity>
+            )}
         </View>
 
       <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>

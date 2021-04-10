@@ -5,24 +5,28 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
 
-export default function MenuScreen({
+export default function FinalResultScreen({
   navigation,
-}: StackScreenProps<RootStackParamList, 'Menu'>) {
+  route
+}: StackScreenProps<RootStackParamList, 'FinalResult'>) {
+    let results = (async () => {
+        return await questions.getAnswers();
+    })();
+
+    let allResults = Object.values(results);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Menu</Text>
-
-        {(questions.getAll()).map((questionInformation:any) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Question', {
-                id: questionInformation.id
-            })} style={styles.link}>
-        <Text style={styles.linkText}>{questionInformation.title}</Text>
-            </TouchableOpacity>
-        ))}
-
-      <TouchableOpacity onPress={() => navigation.replace('FinalResult')} style={styles.link}>
-        <Text style={styles.linkText}>Final Results</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Final Results</Text>
+        <View>
+            {allResults.map((result) => (
+                <Text style={styles.linkText}>
+                    {result.title} - 
+                    {result.correctAnswer} - 
+                    {result.selectedAnswer || "Not answered"}
+                </Text>
+            ))}
+        </View>
 
       <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
         <Text style={styles.linkText}>Back to home</Text>

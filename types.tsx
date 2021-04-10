@@ -9,6 +9,7 @@ export type RootStackParamList = {
       id:String,
       optionSelected: String
   };
+  FinalResult: undefined;
   NotFound: undefined;
 };
 
