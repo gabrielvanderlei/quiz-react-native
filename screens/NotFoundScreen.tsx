@@ -3,15 +3,17 @@ import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
+import quiz from '../services/quiz';
 
 export default function NotFoundScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, 'NotFound'>) {
+    let quizData = quiz.getData();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
+<Text style={styles.title}>{quizData.text.screenNotExists}</Text>
       <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>Go to home screen!</Text>
+  <Text style={styles.linkText}>{quizData.text.backToHome}</Text>
       </TouchableOpacity>
     </View>
   );

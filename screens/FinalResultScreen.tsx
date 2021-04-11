@@ -4,11 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
+import quiz from '../services/quiz';
 
 export default function FinalResultScreen({
   navigation,
   route
 }: StackScreenProps<RootStackParamList, 'FinalResult'>) {
+    let quizData = quiz.getData();
     let results = questions.getAnswers();
     let allResults:any = Object.values(results);
 
@@ -23,7 +25,7 @@ export default function FinalResultScreen({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Final Results</Text>
+<Text style={styles.title}>{quizData.text.finalResults}</Text>
         <View>
             {allResults.map((result:any) => (
                 <>
@@ -42,7 +44,7 @@ export default function FinalResultScreen({
                         <>
                             <View>
                                 {result.title} - 
-                                {"Not answered"}
+                                {quizData.text.notAnswered}
                             </View>
                         </>
                     ) }
@@ -50,8 +52,8 @@ export default function FinalResultScreen({
             ))}
         </View>
 
-      <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>Back to home</Text>
+      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
+        <Text style={styles.linkText}>{quizData.text.backToMenu}</Text>
       </TouchableOpacity>
     </View>
   );

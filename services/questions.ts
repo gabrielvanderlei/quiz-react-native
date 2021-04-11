@@ -1,12 +1,16 @@
-import questionsMock from './QuestionsMock';
+import configuration from "./configuration";
+
+let questionsDataInformation = configuration.getQuestions();
 
 export default {
     getAll: function(){
-        return questionsMock;
+        return questionsDataInformation;
     },
 
     getOne: function(id:any){
-        return questionsMock.filter(questionData => questionData.id === id )[0];
+        return questionsDataInformation.filter(function(questionData:any){
+            return questionData.id === id 
+        })[0];
     },
     
     isLast: function(id:any){
@@ -45,7 +49,7 @@ export default {
         let allQuestionsAnswered = (allQuestionsAnsweredStored);
         let returnData:any = {};
         
-        allQuestions.map(questionElement => {
+        allQuestions.map(function(questionElement:any) {
             returnData[questionElement.id] = {
                 ...questionElement,
                 ...(allQuestionsAnswered[questionElement.id] || {})

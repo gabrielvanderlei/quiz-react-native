@@ -4,13 +4,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
+import quiz from '../services/quiz';
 
 export default function MenuScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, 'Menu'>) {
+    let quizData = quiz.getData();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Menu</Text>
+      <Text style={styles.title}>{quizData.text.menu}</Text>
         <br />
 
         {(questions.getAll()).map((questionInformation:any) => (
@@ -23,11 +25,11 @@ export default function MenuScreen({
 
         <br />
       <TouchableOpacity onPress={() => navigation.replace('FinalResult')} style={styles.link}>
-        <Text style={styles.linkText}>Final Results</Text>
+<Text style={styles.linkText}>{quizData.text.finalResults}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>Back to home</Text>
+        <Text style={styles.linkText}>{quizData.text.backToHome}</Text>
       </TouchableOpacity>
     </View>
   );

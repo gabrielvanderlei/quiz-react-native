@@ -4,11 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
+import quiz from '../services/quiz';
 
 export default function AnswerScreen({
   navigation,
   route
 }: StackScreenProps<RootStackParamList, 'Answer'>) {
+    const quizData = quiz.getData();
   const navigationParams:any = route.params;
   const params = questions.getOne(navigationParams.id);
   const correctAnswer = params.correctAnswer;
@@ -21,7 +23,7 @@ export default function AnswerScreen({
     if(isRightAnswer){
         returnMessage = params.correctAnswerInformation.title;
     } else {
-        returnMessage = `${params.wrongAnswerInformation.title}. The right answer was ${rightAnswer}`;
+        returnMessage = `${params.wrongAnswerInformation.title} ${quizData.text.wrongAnswer} ${rightAnswer}`;
     }
 
     return returnMessage;
@@ -44,7 +46,7 @@ export default function AnswerScreen({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Question</Text>
+<Text style={styles.title}>{params.title}</Text>
         <View>
             <Text style={styles.linkText}>{getTitle(isRightAnswer, correctAnswer)}</Text>
             <Text style={styles.linkText}>{getDescription(isRightAnswer, correctAnswer)}</Text>
@@ -53,17 +55,17 @@ export default function AnswerScreen({
                 <TouchableOpacity style={styles.link} onPress={() => navigation.replace('Question', {
                     id: String(params.nextQuestion)
                 })}>
-                    <Text  style={styles.linkText}>Next question</Text>
+                    <Text  style={styles.linkText}>{quizData.text.nextQuestion}</Text>
                 </TouchableOpacity>
             ) : (
                 <TouchableOpacity style={styles.link} onPress={() => navigation.replace('FinalResult')}>
-                    <Text  style={styles.linkText}>See results</Text>
+                    <Text  style={styles.linkText}>{quizData.text.seeResults}</Text>
                 </TouchableOpacity>
             )}
         </View>
 
-      <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>Back to home</Text>
+      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
+        <Text style={styles.linkText}>{quizData.text.backToMenu}</Text>
       </TouchableOpacity>
     </View>
   );

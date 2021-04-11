@@ -4,11 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
+import quiz from '../services/quiz';
 
 export default function QuestionScreen({
   navigation,
   route
 }: StackScreenProps<RootStackParamList, 'Question'>) {
+    let quizData = quiz.getData();
   const navigationParams:any = route.params;
   const params = questions.getOne(navigationParams.id);
   const [optionSelected, setSelectedOption] = React.useState('');
@@ -45,12 +47,12 @@ export default function QuestionScreen({
                 onPress={verifyQuestion}
                 style={styles.link}
             >
-                <Text style={styles.linkText}>Verify answer</Text>
+                <Text style={styles.linkText}>{quizData.text.verifyAnswer}</Text>
             </TouchableOpacity>
         </View>
 
-      <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>Back to home</Text>
+      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
+        <Text style={styles.linkText}>{quizData.text.backToMenu}</Text>
       </TouchableOpacity>
     </View>
   );
