@@ -34,15 +34,15 @@ export default {
         localStorage.setItem('QUESTIONS', JSON.stringify(allQuestionsAnswered));
     },
 
-    getAnswers: async function(){
+    getAnswers: function(){
         let allQuestions = this.getAll();
-        let allQuestionsAnsweredStored = JSON.stringify({});
+        let allQuestionsAnsweredStored:any = {};
 
         if(localStorage.getItem('QUESTIONS')){
             allQuestionsAnsweredStored = JSON.parse(String(localStorage.getItem('QUESTIONS')));
         }
 
-        let allQuestionsAnswered = JSON.parse(allQuestionsAnsweredStored);
+        let allQuestionsAnswered = (allQuestionsAnsweredStored);
         let returnData:any = {};
         
         allQuestions.map(questionElement => {

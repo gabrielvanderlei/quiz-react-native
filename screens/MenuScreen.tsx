@@ -11,15 +11,17 @@ export default function MenuScreen({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Menu</Text>
+        <br />
 
         {(questions.getAll()).map((questionInformation:any) => (
             <TouchableOpacity onPress={() => navigation.navigate('Question', {
                 id: questionInformation.id
-            })} style={styles.link}>
+            })} style={styles.menuOption}>
         <Text style={styles.linkText}>{questionInformation.title}</Text>
             </TouchableOpacity>
         ))}
 
+        <br />
       <TouchableOpacity onPress={() => navigation.replace('FinalResult')} style={styles.link}>
         <Text style={styles.linkText}>Final Results</Text>
       </TouchableOpacity>
@@ -44,7 +46,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   link: {
-    marginTop: 15,
+    marginTop: 9,
+    paddingVertical: 15,
+  },
+  menuOption: {
+    marginTop: 1,
     paddingVertical: 15,
   },
   linkText: {

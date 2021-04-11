@@ -33,7 +33,8 @@ export default function QuestionScreen({
                     <View>
                         <label>
                             <input onClick={() => setSelectedOption(optionElement.id)} type="radio" name="correctAnswer" /> 
-                            {optionElement.description}
+                            {optionElement.id}. 
+                             {optionElement.description}
                         </label>
                     </View>
                 ))}
@@ -42,8 +43,9 @@ export default function QuestionScreen({
             
             <TouchableOpacity
                 onPress={verifyQuestion}
+                style={styles.link}
             >
-                <Text>Verify answer</Text>
+                <Text style={styles.linkText}>Verify answer</Text>
             </TouchableOpacity>
         </View>
 
@@ -73,5 +75,5 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 14,
     color: '#2e78b7',
-  },
+  }
 });

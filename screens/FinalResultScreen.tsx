@@ -9,22 +9,44 @@ export default function FinalResultScreen({
   navigation,
   route
 }: StackScreenProps<RootStackParamList, 'FinalResult'>) {
-    let results = (async () => {
-        return await questions.getAnswers();
-    })();
+    let results = questions.getAnswers();
+    let allResults:any = Object.values(results);
 
-    let allResults = Object.values(results);
+    let getAnsweredStyle:any = (
+        correctAnswer:string,
+        selectedAnswer:string
+    ) => {
+        return (correctAnswer === selectedAnswer) ? 
+            styles.rightAnswer:
+            styles.wrongAnswer;
+    }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Final Results</Text>
         <View>
-            {allResults.map((result) => (
-                <Text style={styles.linkText}>
-                    {result.title} - 
-                    {result.correctAnswer} - 
-                    {result.selectedAnswer || "Not answered"}
-                </Text>
+            {allResults.map((result:any) => (
+                <>
+                    { result.selectedAnswer ? (
+                        <>
+                            <View style={getAnsweredStyle(
+                                result.correctAnswer,
+                                result.selectedAnswer
+                            )}>
+                                {result.title} - 
+                                {result.correctAnswer} - 
+                                {result.selectedAnswer }
+                            </View>
+                        </>
+                    ) : (
+                        <>
+                            <View>
+                                {result.title} - 
+                                {"Not answered"}
+                            </View>
+                        </>
+                    ) }
+                </>
             ))}
         </View>
 
@@ -55,4 +77,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  rightAnswer: {
+      color: 'green'
+  },
+  wrongAnswer: {
+      color: 'red'
+  }
 });

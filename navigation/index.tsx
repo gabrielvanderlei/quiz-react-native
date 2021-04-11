@@ -37,7 +37,7 @@ function RootNavigator() {
       <Stack.Screen name="Question" component={QuestionScreen} />
       <Stack.Screen name="Answer" component={AnswerScreen} />
       <Stack.Screen name="FinalResult" component={FinalResultScreen} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="NotFound" component={HomeScreen} />
     </Stack.Navigator>
   );
 }

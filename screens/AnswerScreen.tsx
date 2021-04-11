@@ -21,7 +21,7 @@ export default function AnswerScreen({
     if(isRightAnswer){
         returnMessage = params.correctAnswerInformation.title;
     } else {
-        returnMessage = `${params.wrongAnswerInformation.title}The right answer was ${rightAnswer}`;
+        returnMessage = `${params.wrongAnswerInformation.title}. The right answer was ${rightAnswer}`;
     }
 
     return returnMessage;
@@ -50,14 +50,14 @@ export default function AnswerScreen({
             <Text style={styles.linkText}>{getDescription(isRightAnswer, correctAnswer)}</Text>
 
             {!isLastQuestion ? (
-                <TouchableOpacity onPress={() => navigation.replace('Question', {
+                <TouchableOpacity style={styles.link} onPress={() => navigation.replace('Question', {
                     id: String(params.nextQuestion)
                 })}>
-                    <Text>Next question</Text>
+                    <Text  style={styles.linkText}>Next question</Text>
                 </TouchableOpacity>
             ) : (
-                <TouchableOpacity onPress={() => navigation.replace('FinalResult')}>
-                    <Text>See results</Text>
+                <TouchableOpacity style={styles.link} onPress={() => navigation.replace('FinalResult')}>
+                    <Text  style={styles.linkText}>See results</Text>
                 </TouchableOpacity>
             )}
         </View>
