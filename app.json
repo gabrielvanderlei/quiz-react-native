@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "quiz-boilerplate",
+    "name": "Quiz de Química",
     "slug": "quiz-boilerplate",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/quiz.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/quiz.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,13 +22,16 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "gv.chemistryquiz",
+      "versionCode": 3,
+      "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/quiz.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/quiz.png"
     }
   }
 }

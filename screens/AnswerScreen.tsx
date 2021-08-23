@@ -1,10 +1,12 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Image } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
 import quiz from '../services/quiz';
+
+import Button from '../components/Button';
 
 export default function AnswerScreen({
   navigation,
@@ -17,16 +19,14 @@ export default function AnswerScreen({
   const optionSelected = navigationParams.optionSelected;
   const isRightAnswer = (correctAnswer === optionSelected);
   const isLastQuestion = questions.isLast(navigationParams.id);
+  const imgSource = params.answerAsset;
 
   let getTitle = (isRightAnswer:any, rightAnswer:any) => {
-    let returnMessage = '';
     if(isRightAnswer){
-        returnMessage = params.correctAnswerInformation.title;
+        return (<Text style={{color: "rgb(0, 0, 100)"}}>{params.correctAnswerInformation.title}</Text>);
     } else {
-        returnMessage = `${params.wrongAnswerInformation.title} ${quizData.text.wrongAnswer} ${rightAnswer}`;
+        return (<Text style={{color: "rgb(100, 0, 0)"}}>{`${params.wrongAnswerInformation.title} ${quizData.text.wrongAnswer} ${rightAnswer}`}</Text>);
     }
-
-    return returnMessage;
   }
   
   let getDescription = (isRightAnswer:any, rightAnswer:any) => {
@@ -46,27 +46,36 @@ export default function AnswerScreen({
 
   return (
     <View style={styles.container}>
-<Text style={styles.title}>{params.title}</Text>
+      <ScrollView>
+        <Text style={styles.title}>{params.title}</Text>
         <View>
             <Text style={styles.linkText}>{getTitle(isRightAnswer, correctAnswer)}</Text>
             <Text style={styles.linkText}>{getDescription(isRightAnswer, correctAnswer)}</Text>
 
-            {!isLastQuestion ? (
-                <TouchableOpacity style={styles.link} onPress={() => navigation.replace('Question', {
-                    id: String(params.nextQuestion)
-                })}>
-                    <Text  style={styles.linkText}>{quizData.text.nextQuestion}</Text>
-                </TouchableOpacity>
-            ) : (
-                <TouchableOpacity style={styles.link} onPress={() => navigation.replace('FinalResult')}>
-                    <Text  style={styles.linkText}>{quizData.text.seeResults}</Text>
-                </TouchableOpacity>
+            {!!imgSource && (
+              <Image
+                source={imgSource}
+                style={styles.image}
+              />
             )}
         </View>
+        
+        {!isLastQuestion ? (
+            <Button style={{ ...styles.link, ...styles.principal }} onPress={() => navigation.replace('Question', {
+                id: String(params.nextQuestion)
+            })}>
+                <Text style={styles.principal}>{quizData.text.nextQuestion}</Text>
+            </Button>
+        ) : (
+            <Button style={{ ...styles.link }} onPress={() => navigation.replace('FinalResult')}>
+                <Text style={styles.principal}>{quizData.text.seeResults}</Text>
+            </Button>
+        )}
 
-      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
-        <Text style={styles.linkText}>{quizData.text.backToMenu}</Text>
-      </TouchableOpacity>
+        <Button onPress={() => navigation.replace('Menu')} style={{ ...styles.link }}>
+          <Text>{quizData.text.backToMenu}</Text>
+        </Button>
+      </ScrollView>
     </View>
   );
 }
@@ -77,18 +86,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: "justify",
     padding: 20,
+    fontSize: 18
   },
   title: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
+    padding: 15,
+    paddingTop: 150,
+    marginBottom: 20,
+    borderRadius: 9,
+    backgroundColor: 'rgb(240,240,240)',
+    color: 'black'
   },
   link: {
     marginTop: 15,
     paddingVertical: 15,
   },
   linkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+    fontSize: 16,
+    color: 'black',
+    textAlign: 'justify',
+    lineHeight: 23,
+    padding: 15
   },
+  principal: {
+    padding: 20,
+    fontWeight: 'bold'
+  },
+  image: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain'
+  }
 });

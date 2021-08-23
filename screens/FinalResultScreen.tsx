@@ -1,18 +1,19 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import { questions } from '../services';
 import quiz from '../services/quiz';
 
+import Button from '../components/Button';
+
 export default function FinalResultScreen({
   navigation,
   route
 }: StackScreenProps<RootStackParamList, 'FinalResult'>) {
     let quizData = quiz.getData();
-    let results = questions.getAnswers();
-    let allResults:any = Object.values(results);
+    let [allResults, setAllResults] = useState([]);
 
     let getAnsweredStyle:any = (
         correctAnswer:string,
@@ -23,28 +24,39 @@ export default function FinalResultScreen({
             styles.wrongAnswer;
     }
 
+    let loadQuestions = async () => {
+      let questionsObject = await  questions.getAnswers();
+      setAllResults(Object.values(questionsObject));
+    }
+
+    useEffect(() => {
+      loadQuestions();
+    })
+
   return (
     <View style={styles.container}>
-<Text style={styles.title}>{quizData.text.finalResults}</Text>
+      <Text style={styles.title}>{quizData.text.finalResults}</Text>
         <View>
             {allResults.map((result:any) => (
                 <>
-                    { result.selectedAnswer ? (
-                        <>
-                            <View style={getAnsweredStyle(
+                    { (result && result.selectedAnswer) ? (
+                        <View>
+                            <Text style={getAnsweredStyle(
                                 result.correctAnswer,
                                 result.selectedAnswer
                             )}>
                                 {result.title} - 
                                 {result.correctAnswer} - 
                                 {result.selectedAnswer }
-                            </View>
-                        </>
+                            </Text>
+                        </View>
                     ) : (
                         <>
                             <View>
-                                {result.title} - 
+                              <Text>
+                                {(result && result.title) ? result.title : "[]"} - 
                                 {quizData.text.notAnswered}
+                              </Text>
                             </View>
                         </>
                     ) }
@@ -52,9 +64,9 @@ export default function FinalResultScreen({
             ))}
         </View>
 
-      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
-        <Text style={styles.linkText}>{quizData.text.backToMenu}</Text>
-      </TouchableOpacity>
+      <Button onPress={() => navigation.replace('Menu')} style={styles.link}>
+        <Text>{quizData.text.backToMenu}</Text>
+      </Button>
     </View>
   );
 }
@@ -68,8 +80,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
+    padding: 15,
+    paddingTop: 150,
+    marginBottom: 20,
+    borderRadius: 9,
+    backgroundColor: 'rgb(240,240,240)',
+    color: 'black'
   },
   link: {
     marginTop: 15,
@@ -80,9 +98,19 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   rightAnswer: {
-      color: 'green'
+    backgroundColor: 'rgb(0, 200, 0)',
+    padding: 9,
+    paddingHorizontal: 40,
+    margin: 5,
+    color: 'white',
+    borderRadius: 9
   },
   wrongAnswer: {
-      color: 'red'
+    backgroundColor: 'rgb(200, 0, 0)',
+    padding: 9,
+    paddingHorizontal: 40,
+    margin: 5,
+    color: 'white',
+    borderRadius: 9
   }
 });

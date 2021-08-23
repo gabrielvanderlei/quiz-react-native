@@ -1,4 +1,5 @@
 import configuration from "./configuration";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let questionsDataInformation = configuration.getQuestions();
 
@@ -29,21 +30,21 @@ export default {
         };
 
         let allQuestionsAnsweredStored = JSON.stringify({});
-        if(localStorage.getItem('QUESTIONS')){
-            allQuestionsAnsweredStored = String(localStorage.getItem('QUESTIONS'));
+        if(await AsyncStorage.getItem('@QUESTIONS')){
+            allQuestionsAnsweredStored = String(await AsyncStorage.getItem('@QUESTIONS') || "{}");
         }
         
         let allQuestionsAnswered = JSON.parse(allQuestionsAnsweredStored);
         allQuestionsAnswered[storeObject.id] = storeObject;
-        localStorage.setItem('QUESTIONS', JSON.stringify(allQuestionsAnswered));
+        await AsyncStorage.setItem('@QUESTIONS', JSON.stringify(allQuestionsAnswered));
     },
 
-    getAnswers: function(){
+    getAnswers: async function(){
         let allQuestions = this.getAll();
         let allQuestionsAnsweredStored:any = {};
 
-        if(localStorage.getItem('QUESTIONS')){
-            allQuestionsAnsweredStored = JSON.parse(String(localStorage.getItem('QUESTIONS')));
+        if(await AsyncStorage.getItem('@QUESTIONS')){
+            allQuestionsAnsweredStored = JSON.parse(String((await AsyncStorage.getItem('@QUESTIONS')) || "{}"));
         }
 
         let allQuestionsAnswered = (allQuestionsAnsweredStored);
@@ -55,7 +56,7 @@ export default {
                 ...(allQuestionsAnswered[questionElement.id] || {})
             }
         })
-
+        
         return returnData;
     }
 

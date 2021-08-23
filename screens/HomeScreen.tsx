@@ -1,9 +1,11 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { RootStackParamList } from '../types';
 import quiz from '../services/quiz';
+
+import Button from '../components/Button';
 
 export default function HomeScreen({
   navigation,
@@ -14,9 +16,9 @@ export default function HomeScreen({
     <View style={styles.container}>
       <Text style={styles.title}>{quizData.title}</Text>
       <Text style={styles.description}>{quizData.description}</Text>
-      <TouchableOpacity onPress={() => navigation.replace('Menu')} style={styles.link}>
-        <Text style={styles.linkText}>{quizData.text.menuButton}</Text>
-      </TouchableOpacity>
+      <Button onPress={() => navigation.replace('Menu')} style={styles.link}>
+        <Text>{quizData.text.menuButton}</Text>
+      </Button>
     </View>
   );
 }
@@ -27,15 +29,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 0,
   },
   title: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: 'bold',
+    padding: 9,
+    paddingTop: 300,
+    marginBottom: 20,
+    borderRadius: 9,
+    backgroundColor: 'rgb(100, 0, 100)',
+    color: 'white'
   },
   description: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: 'normal',
   },
   link: {
     marginTop: 15,

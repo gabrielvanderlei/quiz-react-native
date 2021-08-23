@@ -6,6 +6,8 @@ import { RootStackParamList } from '../types';
 import { questions } from '../services';
 import quiz from '../services/quiz';
 
+import Button from '../components/Button';
+
 export default function MenuScreen({
   navigation,
 }: StackScreenProps<RootStackParamList, 'Menu'>) {
@@ -13,24 +15,25 @@ export default function MenuScreen({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{quizData.text.menu}</Text>
-        <br />
-
+      
+      <View>
         {(questions.getAll()).map((questionInformation:any) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Question', {
+            <Button key={questionInformation.id} onPress={() => navigation.navigate('Question', {
                 id: questionInformation.id
             })} style={styles.menuOption}>
-        <Text style={styles.linkText}>{questionInformation.title}</Text>
-            </TouchableOpacity>
+              <Text>{questionInformation.title}</Text>
+            </Button>
         ))}
+      </View> 
+      <View style={{paddingTop: 50}}>
+        <Button  onPress={() => navigation.replace('FinalResult')} style={styles.link}>
+          <Text>{quizData.text.finalResults}</Text>
+        </Button>
 
-        <br />
-      <TouchableOpacity onPress={() => navigation.replace('FinalResult')} style={styles.link}>
-<Text style={styles.linkText}>{quizData.text.finalResults}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.link}>
-        <Text style={styles.linkText}>{quizData.text.backToHome}</Text>
-      </TouchableOpacity>
+        <Button onPress={() => navigation.replace('Home')} style={styles.link}>
+          <Text>{quizData.text.backToHome}</Text>
+        </Button>
+      </View>
     </View>
   );
 }
