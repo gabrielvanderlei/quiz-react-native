@@ -19,11 +19,7 @@ foo@bar:~$ expo start
 ```
 
 ### Hosting
-Hosted on Vercel at https://expo-simple-quiz.vercel.app/ 
+Hosted on Vercel at https://quizquimica.netlify.app/ 
 
 ### Configuration
-The quiz has support to multiple questions with one correct answer and all the texts can be modified in the configuration folder (configuration/enus).
-
-### Next steps
-- Create a desktop or web application to mount Quiz/Questions Mock in a GUI
-- Send Final Results information to some endpoint if the user want's to share your results.
+You can change the configuration of the quiz in the [QuestionMock.ts](https://github.com/gabrielvanderlei/quiz-react-native/blob/main/configuration/enus/QuestionsMock.ts) file
